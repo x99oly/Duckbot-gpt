@@ -2,6 +2,7 @@ import Bot from "./entities/duckbot"
 import BotConfig from "./entities/duckconfig"
 import { createInterface } from "readline"
 import { IConfig } from "./interfaces/iconfig"
+import dotenv from 'dotenv'
 
 export default class Duckbot
 {
@@ -40,4 +41,13 @@ export default class Duckbot
     }
 }
 
+dotenv.config()
+async function test(){
+    const apikey = String(process.env.OPEN_AI_KEY)
+    const duckbot = new Duckbot(apikey, "Só responda sim, não ou talvez.")
+    const question = await duckbot.getConsoleInput()
+    console.log(await duckbot.getBotAwnser(question))
+}
+
+test()
 

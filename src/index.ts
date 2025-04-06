@@ -7,12 +7,12 @@ dotenv.config()
 
 const config = new BotConfig("Responda sempre começando a frase com 'SOU EU O BOT'")
 
-async function getAwnser(question: string): Promise<string> {
+export async function getBotAwnser(question: string): Promise<string> {
     const bot = new Bot(String(process.env.OPEN_AI_KEY))
     return (await bot.askbot(question))
 }
 
-async function getUserInput(): Promise<string> {
+export async function getConsoleInput(): Promise<string> {
     const rl = createInterface({
         input: process.stdin,
         output: process.stdout
@@ -26,9 +26,3 @@ async function getUserInput(): Promise<string> {
     })
 }
 
-async function test(){
-    const question = await getUserInput()
-    console.log(await getAwnser(question))
-}
-
-test()

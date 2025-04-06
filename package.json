@@ -2,14 +2,18 @@
   "name": "duckbot-gpt",
   "version": "1.0.0",
   "description": "Duckbot-GPT is an experimental chatbot built with chat GPT model",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "start": "npm run build && node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/x99oly/Duckbot-gpt"
+  },
   "keywords": [],
-  "author": "",
+  "author": "Samuel Araujo",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^22.13.14",

@@ -4,28 +4,38 @@ import BotConfig from "./duckconfig";
 export default class Bot
 {
     private _client;
-    private _config = new BotConfig("Just a ai assistent")
+    private _config = new BotConfig("Just a ai assistant")
 
-    constructor(key:string, config?:BotConfig){
+    constructor(key: string, config?: BotConfig) {
         if (!key) throw new Error("Access Key not found.")
         
         this._client = new OpenAI({
             apiKey: key
         })
 
-        if (config){
+        if (config) {
             this._config = config
         }
     }
 
-    askbot = async (ask:string): Promise<string> => {
-        const response = await this._client.responses.create({
-            model: "gpt-4o-mini",
-            input: ask,
-        })
+    askbot = async (ask:string): Promise<string> => { 
+        const response = await this._client.responses.create(this.createRequestBody(ask))
         return response.output_text
     }
+
+    createRequestBody(question: string) {
+        return {
+          model: this._config.model,
+          input: question,
+          messages: [
+            { role: "system", content: this._config.purpose },
+          ],
+          max_tokens: this._config.max_tokens,
+          temperature: this._config.playfulness
+        };
+    }
 }
+
 
 
 // OPEN AI RESPONSE BODY

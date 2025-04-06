@@ -1,6 +1,7 @@
 import { IConfig } from "../interfaces/iconfig"
 
 export default class BotConfig {
+    private _model:string
     private _purpose: string
     private _playfulness: number
     private _cohesion: number
@@ -13,6 +14,7 @@ export default class BotConfig {
         this._cohesion = 0.8 // Só palavras com 80% de chances de fazerem sentido no contexto
         this._redundance = 1.0 // -2 a 2 => Quão maior menor é a repetição de palavras
         this._max_tokens = 1500
+        this._model = "gpt-4o-mini"
     }
 
     setConfig(config:IConfig) {
@@ -38,6 +40,10 @@ export default class BotConfig {
     private setRedundance(n?:number):number {
         if (!n || n < -2 || n > 2) return 1
         return Math.floor(n)
+    }
+
+    get model() {
+        return this._model
     }
 
     get purpose() {

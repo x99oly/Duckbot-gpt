@@ -26,11 +26,9 @@ export default class Bot
     createRequestBody(question: string) {
         return {
           model: this._config.model,
+          instructions: this._config.purpose,
           input: question,
-          messages: [
-            { role: "system", content: this._config.purpose },
-          ],
-          max_tokens: this._config.max_tokens,
+          max_output_tokens: this._config.max_tokens,
           temperature: this._config.playfulness
         };
     }

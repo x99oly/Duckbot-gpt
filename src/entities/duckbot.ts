@@ -4,7 +4,7 @@ import BotConfig from "./duckconfig";
 export default class Bot
 {
     private _client;
-    private _config = new BotConfig("Just a ai assistant")
+    private _config:BotConfig
 
     constructor(key: string, config?: BotConfig) {
         if (!key) throw new Error("Access Key not found.")
@@ -15,6 +15,8 @@ export default class Bot
 
         if (config) {
             this._config = config
+        }else{
+            this._config = new BotConfig("Just a ai assistant")
         }
     }
 

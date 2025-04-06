@@ -1,28 +1,43 @@
 import Bot from "./entities/duckbot"
-import dotenv from 'dotenv'
 import BotConfig from "./entities/duckconfig"
 import { createInterface } from "readline"
+import { IConfig } from "./interfaces/iconfig"
 
-dotenv.config()
+export default class Duckbot
+{
+    private _bot:Bot
+    private _config:BotConfig
 
-const config = new BotConfig("Responda sempre começando a frase com 'SOU EU O BOT'")
+    constructor(apikey:string,purpose:string, botconfig?:IConfig)
+    {
+        this._config=new BotConfig(purpose)
+        if (botconfig){
+            this._config.setConfig(botconfig)
+        }
+        this._bot = new Bot(apikey, this._config)
+    }
 
-export async function getBotAwnser(question: string): Promise<string> {
-    const bot = new Bot(String(process.env.OPEN_AI_KEY))
-    return (await bot.askbot(question))
-}
+    changeBotConfig(config:IConfig){
+        this._config.setConfig(config)
+    }
 
-export async function getConsoleInput(): Promise<string> {
-    const rl = createInterface({
-        input: process.stdin,
-        output: process.stdout
-    })
-
-    return new Promise((resolve) => {
-        rl.question('Faça uma pergunta ao bot: ', (answer) => {
-            rl.close()
-            resolve(answer)
+    async getBotAwnser(question: string): Promise<string> {
+        return (await this._bot.askbot(question))
+    }
+    
+    async getConsoleInput(): Promise<string> {
+        const rl = createInterface({
+            input: process.stdin,
+            output: process.stdout
         })
-    })
+    
+        return new Promise((resolve) => {
+            rl.question('Faça uma pergunta ao bot: ', (answer) => {
+                rl.close()
+                resolve(answer)
+            })
+        })
+    }
 }
+
 
